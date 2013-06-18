@@ -4,6 +4,8 @@ public class Pollux {
 	private String message;
 	private String morse_encoded;
 	private String pollux;
+	private int lowerboundrand;
+	private int upperboundrand;
 	private static String morse_array[][] = {
 	        { "a", ".- "   },{ "b", "-... " },{ "c", "-.-. " },{ "d", "-.. "  },
 	        { "e", ". "    },{ "f", "..-. " },{ "g", "--. "  },{ "h", ".... " },
@@ -11,15 +13,15 @@ public class Pollux {
 	        { "m", "-- "   },{ "n", "-. "   },{ "o", "--- "  },{ "p", ".--. " },
 	        { "q", "--.- " },{ "r", ".-. "  },{ "s", "... "  },{ "t", "- "    },
 	        { "u", "..- "  },{ "v", "...- " },{ "w", ".-- "  },{ "x", "-..- " },
-	        { "y", "-.-- " },{ "z", "--.. " },{ ".", ".-.-.- "},{ ",", "--..--"},
-	        { "?", "..--.."},{  "'", ".----."},{ "!", "-.-.--"},{ " ", " "    },
-	        { "/", "-..-." },{ "(", "-.--." },{ ")", "-.--.-"},{ "&", ".-..." },
-	        { ":", "---..."},{ ";", "-.-.-."},{ "=", "-...-" },{ "+", ".-.-." },
-	        { "-", "-....-"},{ "_", "..--.-"},{ "\"",  ".-..-."},{ "$", "...-..-"},
-	        { "@", ".--.-."},{ "0", "-----" },{ "1", ".----" },{ "2", "..---" },
-	        { "3", "...--" },{ "4", "....-" },{ "5", "....." },{ "6", "-...." },
-	        { "7", "--..." },{ "8", "---.." },{ "9", "----." },{ "à", ".--.-" },
-	        { "ç", "-.-.." },{ "è", ".-..-" },{ "é", "..-.." },
+	        { "y", "-.-- " },{ "z", "--.. " },{ ".", ".-.-.- "},{ ",", "--..-- "},
+	        { "?", "..--.. "},{  "'", ".----. "},{ "!", "-.-.-- "},{ " ", " "    },
+	        { "/", "-..-. " },{ "(", "-.--. " },{ ")", "-.--.- "},{ "&", ".-... " },
+	        { ":", "---... "},{ ";", "-.-.-. "},{ "=", "-...- " },{ "+", ".-.-. " },
+	        { "-", "-....- "},{ "_", "..--.- "},{ "\"",  ".-..-. "},{ "$", "...-..- "},
+	        { "@", ".--.-. "},{ "0", "----- " },{ "1", ".---- " },{ "2", "..--- " },
+	        { "3", "...-- " },{ "4", "....- " },{ "5", "..... " },{ "6", "-.... " },
+	        { "7", "--... " },{ "8", "---.. " },{ "9", "----. " },{ "à", ".--.- " },
+	        { "ç", "-.-.. " },{ "è", ".-..- " },{ "é", "..-.. " },
 	    };
 	
 	
@@ -30,13 +32,23 @@ public class Pollux {
 		pollux="";
 	}
 	
-	public Pollux(String pmessage, String choice) { //Constructor
+	public Pollux(String pmessage, String choice,String choice2) { //Constructor
 		
-		if(choice.equals("encode")){
+		if(choice.equals("encode") && choice2.equals("figures")){
 		message = pmessage;
 		morse_encoded = "";
 		pollux="";
+		lowerboundrand=0;
+		upperboundrand=2;
 		}
+		
+		if(choice.equals("encode") && choice2.equals("letters")){
+			message = pmessage;
+			morse_encoded = "";
+			pollux="";
+			lowerboundrand=4;
+			upperboundrand=10;
+			}
 		
 		if(choice.equals("decode")){
 			message = "";
@@ -49,7 +61,7 @@ public class Pollux {
 	public String getMess() { //Getter : Gets message
 		this.fromPolluxtoMorse();
 		this.morseDecode();
-		return this.message;
+		return prettyText(this.message);
 	}
 	
 	public String getMorseEncoded() { //Getter : Gets morse_encoded
@@ -139,8 +151,14 @@ public void toPollux() {
 	for(char morse_symb : mess_array) {
 		
 		if(morse_symb == '.') {
-			
 			int rand = (int)random(0,13);
+			if(this.lowerboundrand==0){
+			rand = (int)random(lowerboundrand,upperboundrand + (int)random(0,1)); 
+			}
+			
+			if(this.lowerboundrand==4){
+			rand = (int)random(lowerboundrand,upperboundrand + (int)random(0,3)); 
+				}
 			
 			switch(rand){
 			
@@ -192,7 +210,7 @@ public void toPollux() {
 		}
 		if(morse_symb == '-') {
 			
-			int rand = (int)random(0,10);
+		int	rand = (int)random(lowerboundrand,upperboundrand);
 			
 			switch(rand){
 			
@@ -236,7 +254,7 @@ public void toPollux() {
 		
 		if(morse_symb == ' ') {
 			
-			int rand = (int)random(0,10);
+			int rand = (int)random(lowerboundrand,upperboundrand);
 			
 			switch(rand){
 			
@@ -280,6 +298,35 @@ public void toPollux() {
 	
 	}
 
+	
+}
+
+public String prettyText(String txt){
+	
+	String output="";
+	char[] array = txt.toCharArray();
+	
+	array[0] = txt.toUpperCase().charAt(0);
+	int i=0;
+	for(char letter : array){
+		i++;
+		if ( (letter=='.' || letter=='!' || letter =='?') && i< (array.length -2)) {
+		
+			if(array[i]==' '){
+				array[i+1]=	txt.toUpperCase().charAt(i+1);
+			}
+			else{ //TODO Add char space ' ' after . ! ?	
+				
+			}
+			
+		}
+		
+	
+	}
+	
+	output = String.valueOf(array);
+	
+	return output;
 	
 }
 

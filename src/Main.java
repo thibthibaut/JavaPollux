@@ -3,9 +3,6 @@ import java.util.Date;
 
 import javax.swing.JFrame;
 
-/**
- * 
- */
 
 /**
  * @author Thibaut Vercueil
