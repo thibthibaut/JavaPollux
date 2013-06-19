@@ -1,3 +1,7 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 
 public class Pollux {
 
@@ -330,6 +334,38 @@ public String prettyText(String txt){
 	
 }
 
+public void PlayMorse() throws InterruptedException {
+	
+	char[] morse_array= this.morse_encoded.toCharArray();
+	
+	
+	for(char symbol : morse_array){
+		
+		if (symbol == '.'){
+			Son court = new Son(1);
+			court.play();
+		Thread.sleep(300);
+		}
+		
+		if (symbol == '-'){
+			Son lon = new Son(2);
+			lon.play();
+			Thread.sleep(500);
+		}
+		
+		if (symbol == ' '){
+			Son silence = new Son(0);
+			silence.play();
+			Thread.sleep(500);
+		}
+			
+		
+	}
+	
+	
+	
+	
+}
 
 }
 

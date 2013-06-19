@@ -103,15 +103,21 @@ public void actionPerformed(ActionEvent arg0) {
 	
 	
 	if(arg0.getSource() == butt_encode){
-	Pollux pol = new Pollux(text1.getText(),"encode",this.choice);
-	text2.setText(pol.getPollux());
+		Pollux pol = new Pollux(text1.getText(),"encode",this.choice);
+		text2.setText(pol.getMorseEncoded());
+		try {
+			pol.PlayMorse();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
 	if(arg0.getSource() == butt_decode){
 		Pollux pol = new Pollux(text1.getText(),"decode","");
 		text2.setText(pol.getMess());
-		}
+	}
 	 
 }
 
